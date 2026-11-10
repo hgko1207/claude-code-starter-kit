@@ -7,7 +7,7 @@
 - `git push`, `git reset`처럼 되돌리기 어려운 명령은 매번 물어봅니다.
 - 프로젝트 규칙을 적어 두는 `CLAUDE.md` 틀과 `/commit` 명령이 생깁니다.
 
-[규니의 개발블로그](https://hgko-dev.tistory.com)의 팀 세팅 키트(team-ai-kit)에서 혼자서도 쓸 수 있는 부분만 덜어 낸 무료판입니다. MIT 라이선스입니다.
+[규니의 개발블로그](https://hgko-dev.tistory.com)의 팀 세팅 키트([team-ai-kit](https://github.com/hgko1207/team-ai-kit))에서 혼자서도 쓸 수 있는 부분만 덜어 낸 무료판입니다. MIT 라이선스입니다.
 
 ## 이 문서에서 쓰는 표시
 
@@ -118,7 +118,7 @@ Node가 없으면 위험 명령 차단이 **아무 말 없이 꺼집니다.** �
 - `.claude/`와 `CLAUDE.md`를 git에 커밋하면 팀원 모두에게 같이 적용됩니다.
 - 개인 설정은 `.claude/settings.local.json`, 개인 메모는 `CLAUDE.local.md`에 둡니다(커밋하지 않음).
 - 권한 확인 창에서 "다시 묻지 않기"를 고르면 저장 위치를 묻습니다. 공유 파일(`.claude/settings.json`)을 고르면 팀 전체 권한이 바뀌니, 혼자 쓸 허용은 Local을 고릅니다.
-- 계획→검증 흐름, PR 리뷰, 2주 점검까지 맞추는 팀용 세팅은 [블로그](https://hgko-dev.tistory.com)에서 안내합니다. 도입 비용은 [AI 코딩 비용 계산기](https://hgko1207.github.io/ai-cost-calc/)로 미리 볼 수 있습니다.
+- 계획→검증 흐름, PR 리뷰까지 쓰려면 플러그인판 [team-ai-kit](https://github.com/hgko1207/team-ai-kit)을 설치합니다(무료, MIT). 터미널에서 `claude plugin marketplace add hgko1207/team-ai-kit` → `claude plugin install team-ai@team-ai-kit` → Claude에 `/team-ai:setup`. 도입 비용은 [AI 코딩 비용 계산기](https://hgko1207.github.io/ai-cost-calc/)로 미리 볼 수 있습니다.
 
 </details>
 
