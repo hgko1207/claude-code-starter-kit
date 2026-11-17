@@ -22,7 +22,7 @@ function block(why) {
 }
 
 const config = loadConfig(input);
-if (config.error) block(`팀 설정을 읽을 수 없어 모든 명령을 막았습니다 (${config.error}). 사람이 .claude/team-ai.json을 직접 고쳐야 합니다`);
+if (config.error) block(`팀 설정을 읽을 수 없어 모든 명령을 막았습니다 (${config.error}). 사람이 .claude/cc-ready.json을 직접 고쳐야 합니다`);
 if (command.length > MAX_LEN) block("명령이 너무 길어 검사할 수 없습니다");
 
 // ---------- 파싱 ----------

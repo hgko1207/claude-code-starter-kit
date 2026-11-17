@@ -7,7 +7,7 @@
 - `git push`, `git reset`처럼 되돌리기 어려운 명령은 매번 물어봅니다.
 - 프로젝트 규칙을 적어 두는 `CLAUDE.md` 틀과 `/commit` 명령이 생깁니다.
 
-[규니의 개발블로그](https://hgko-dev.tistory.com)의 팀 세팅 키트([team-ai-kit](https://github.com/hgko1207/team-ai-kit))에서 혼자서도 쓸 수 있는 부분만 덜어 낸 무료판입니다. MIT 라이선스입니다.
+[규니의 개발블로그](https://hgko-dev.tistory.com)의 Claude Code 세팅 플러그인([cc-ready](https://github.com/hgko1207/cc-ready))에서 혼자서도 쓸 수 있는 부분만 덜어 낸 무료판입니다. MIT 라이선스입니다.
 
 ## 이 문서에서 쓰는 표시
 
@@ -82,7 +82,7 @@ Node가 없으면 위험 명령 차단이 **아무 말 없이 꺼집니다.** �
 | 증상 | 확인할 것 |
 |---|---|
 | 차단이 전혀 안 된다 | ① [터미널]에서 `node -v` ② `.claude/settings.json`에 `"hooks"`가 있는지 ③ 새 대화를 열었는지 |
-| 모든 파일 수정과 명령이 막힌다 | `.claude/team-ai.json`의 JSON 문법이 깨졌을 때입니다. 편집기로 직접 고칩니다 |
+| 모든 파일 수정과 명령이 막힌다 | `.claude/cc-ready.json`의 JSON 문법이 깨졌을 때입니다. 편집기로 직접 고칩니다 |
 | 같은 확인 창이 계속 뜬다 | 자주 쓰는 안전한 명령은 `settings.json`의 `"allow"`에 넣습니다 (아래 "고쳐 쓰기") |
 | `/commit`이 안 보인다 | `.claude/skills/commit/` 폴더가 복사됐는지, 새 대화를 열었는지 |
 
@@ -93,7 +93,7 @@ Node가 없으면 위험 명령 차단이 **아무 말 없이 꺼집니다.** �
 | `.claude/settings.json` | 권한 규칙과 훅 연결. 비밀 파일 읽기·수정 차단, 되돌리기 어려운 git 명령과 폴더 삭제는 매번 확인, 권한 우회 모드 끄기 |
 | `.claude/hooks/protect-paths.js` | `.env*`, 키 파일(`*.pem`, `*.key`, `id_rsa`, `id_ed25519` 등), `.npmrc`, `secrets/`, `.git/` 수정을 막음. 견본(`.env.example` 등)은 허용 |
 | `.claude/hooks/block-dangerous-bash.js` | 루트·홈 전체 삭제, 보호 브랜치 강제 push, `git clean -fd`, `DROP TABLE`, `curl … \| sh` 같은 명령을 막음 (Bash·PowerShell 모두) |
-| `.claude/team-ai.json` | 기본 목록에 **더해서** 막을 경로·명령·브랜치를 적는 곳 |
+| `.claude/cc-ready.json` | 기본 목록에 **더해서** 막을 경로·명령·브랜치를 적는 곳 |
 | `.claude/skills/commit/` | `/commit` — 브랜치·비밀값 확인 후 목적별로 나눠 커밋 (push는 안 함) |
 | `CLAUDE.md.template` | 프로젝트 안내서 틀 |
 | `CHECKLIST.md` | 자가 진단 10문항. "아니요"인 문항만 연결된 글을 읽으면 됩니다 |
@@ -103,12 +103,12 @@ Node가 없으면 위험 명령 차단이 **아무 말 없이 꺼집니다.** �
 
 - **자주 쓰는 명령 허용**: `settings.json`의 `"allow"`에 넣으면 묻지 않습니다. Windows는 Bash와 PowerShell을 짝으로 넣습니다.
   예: `"Bash(npm test *)"`, `"PowerShell(npm test *)"`
-- **막을 경로·명령 추가**: `.claude/team-ai.json`
+- **막을 경로·명령 추가**: `.claude/cc-ready.json`
   - `protectedPaths`: 수정 금지 경로 (`**` = 하위 전체). 예: `"**/config/prod/**"`
   - `allowPaths`: 직접 추가한 보호 경로 중 예외. 기본 목록(`.env`, 키 파일)은 풀 수 없습니다
   - `protectedBranches`: 강제 push를 막을 브랜치 (기본: main, master, develop, production, release 등)
   - `blockedCommands`: 추가로 막을 명령 (정규식). 예: `"\\bprisma\\s+migrate\\s+reset\\b"`
-- 비밀 파일 위치가 다르면 `settings.json`의 `deny`와 `team-ai.json`의 `protectedPaths`를 같이 고칩니다.
+- 비밀 파일 위치가 다르면 `settings.json`의 `deny`와 `cc-ready.json`의 `protectedPaths`를 같이 고칩니다.
 
 </details>
 
@@ -118,7 +118,7 @@ Node가 없으면 위험 명령 차단이 **아무 말 없이 꺼집니다.** �
 - `.claude/`와 `CLAUDE.md`를 git에 커밋하면 팀원 모두에게 같이 적용됩니다.
 - 개인 설정은 `.claude/settings.local.json`, 개인 메모는 `CLAUDE.local.md`에 둡니다(커밋하지 않음).
 - 권한 확인 창에서 "다시 묻지 않기"를 고르면 저장 위치를 묻습니다. 공유 파일(`.claude/settings.json`)을 고르면 팀 전체 권한이 바뀌니, 혼자 쓸 허용은 Local을 고릅니다.
-- 계획→검증 흐름, PR 리뷰까지 쓰려면 플러그인판 [team-ai-kit](https://github.com/hgko1207/team-ai-kit)을 설치합니다(무료, MIT). 터미널에서 `claude plugin marketplace add hgko1207/team-ai-kit` → `claude plugin install team-ai@team-ai-kit` → Claude에 `/team-ai:setup`. 도입 비용은 [AI 코딩 비용 계산기](https://hgko1207.github.io/ai-cost-calc/)로 미리 볼 수 있습니다.
+- 계획→검증 흐름, PR 리뷰까지 쓰려면 플러그인판 [cc-ready](https://github.com/hgko1207/cc-ready)를 설치합니다(무료, MIT). 터미널에서 `claude plugin marketplace add hgko1207/cc-ready` → `claude plugin install cc-ready@cc-ready` → Claude에 `/cc-ready:setup`. 도입 비용은 [AI 코딩 비용 계산기](https://hgko1207.github.io/ai-cost-calc/)로 미리 볼 수 있습니다.
 
 </details>
 
@@ -138,4 +138,4 @@ Node가 없으면 위험 명령 차단이 **아무 말 없이 꺼집니다.** �
 - 공식 문서: [권한](https://code.claude.com/docs/en/permissions) · [훅](https://code.claude.com/docs/en/hooks) · [스킬](https://code.claude.com/docs/en/skills) · [CLAUDE.md](https://code.claude.com/docs/en/memory)
 
 ---
-v0.2 (team-ai-kit v0.2.8 기준) · 바뀐 내용은 [Releases](https://github.com/hgko1207/claude-code-starter-kit/releases)에 적습니다.
+v0.2 (훅은 cc-ready 0.6.0 기준) · 바뀐 내용은 [Releases](https://github.com/hgko1207/claude-code-starter-kit/releases)에 적습니다.
